@@ -11,6 +11,7 @@ import {
   createProductSchema,
   updateProductSchema,
 } from "../../db/productsSchema";
+import { verifySeller, verifyToken } from "../../middlewares/authMiddleware";
 
 // const createProductSchema = z.object({
 //   name: z.string(),
@@ -22,8 +23,20 @@ const router = Router();
 
 router.get("/", listProducts);
 router.get("/:id", getProudctById);
-router.post("/", validateData(createProductSchema), createProduct);
-router.put("/:id", validateData(updateProductSchema), updateProduct);
-router.delete("/:id", deleteProduct);
+router.post(
+  "/",
+  verifyToken,
+  verifySeller,
+  validateData(createProductSchema),
+  createProduct
+);
+router.put(
+  "/:id",
+  verifyToken,
+  verifySeller,
+  validateData(updateProductSchema),
+  updateProduct
+);
+router.delete("/:id", verifyToken, verifySeller, deleteProduct);
 
 export default router;
