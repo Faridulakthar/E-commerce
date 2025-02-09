@@ -2,6 +2,8 @@ import express, { json, urlencoded } from "express";
 import productsRoutes from "./routes/products/index";
 import authRoutes from "./routes/auth/index";
 
+console.log("testing");
+
 const app = express();
 app.use(urlencoded({ extended: false }));
 app.use(json());
